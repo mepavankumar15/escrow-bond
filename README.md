@@ -2,7 +2,6 @@
 
 **Escrow Bond** is a high-fidelity, production-grade Escrow DApp built on the Solana blockchain. It provides a trustless interface for users to create, fund, and execute secure token exchanges using Program-Derived Addresses (PDAs).
 
-![Dashboard Preview](https://escrow-bond.vercel.app)
 
 ## 🚀 Features
 
