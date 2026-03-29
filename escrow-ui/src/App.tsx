@@ -13,7 +13,7 @@ import TransactionHistory from './components/TransactionHistory';
 
 type View = 'dashboard' | 'escrows' | 'history';
 
-const GITHUB_REPO = 'https://github.com/avyukth/web3-projects';
+const GITHUB_REPO = 'https://github.com/mepavankumar15/escrow-bond';
 
 function AppContent() {
     const [view, setView] = useState<View>('dashboard');
