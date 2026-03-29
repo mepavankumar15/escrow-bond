@@ -48,7 +48,7 @@ function AppContent() {
             <header className="fixed top-0 w-full z-50 bg-background shadow-[0_20px_40px_rgba(6,14,32,0.4)]">
                 <div className="flex justify-between items-center h-20 px-8 w-full font-headline antialiased">
                     <div className="flex items-center gap-12">
-                        <button onClick={() => setView('dashboard')} className="text-2xl font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity">Vault Escrow</button>
+                        <button onClick={() => setView('dashboard')} className="text-2xl font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity">Escrow Bond</button>
                         <nav className="hidden md:flex items-center gap-8">
                             <button onClick={() => setView('dashboard')} className={`transition-colors text-sm font-bold ${view === 'dashboard' ? 'text-on-surface border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-on-surface'}`}>Dashboard</button>
                             <button onClick={() => setView('escrows')} className={`transition-colors text-sm font-bold ${view === 'escrows' ? 'text-on-surface border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-on-surface'}`}>My Escrows</button>
@@ -76,7 +76,7 @@ function AppContent() {
                             <span className="material-symbols-outlined text-primary">account_circle</span>
                         </div>
                         <div>
-                            <p className="text-primary font-bold">Vault Custody</p>
+                            <p className="text-primary font-bold">Escrow Bond</p>
                             <p className="text-xs text-on-surface-variant">Solana Devnet</p>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ function AppContent() {
                                         <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full tracking-widest uppercase font-mono">System: Verified</span>
                                         <div className="h-px flex-grow bg-outline-variant/10 min-w-[100px]"></div>
                                     </div>
-                                    <h1 className="text-4xl font-headline font-extrabold text-on-surface tracking-tight mb-2 italic">Vault Dashboard</h1>
+                                    <h1 className="text-4xl font-headline font-extrabold text-on-surface tracking-tight mb-2 italic">Bond Dashboard</h1>
                                     <p className="text-on-surface-variant max-w-lg">Manage your secure transactions and monitor escrow status across the Solana devnet ecosystem.</p>
                                 </div>
                                 <div className="flex gap-4">
