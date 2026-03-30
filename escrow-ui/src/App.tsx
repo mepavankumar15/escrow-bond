@@ -17,6 +17,7 @@ const GITHUB_REPO = 'https://github.com/mepavankumar15/escrow-bond';
 
 function AppContent() {
     const [view, setView] = useState<View>('dashboard');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const wallet = useWallet();
 
     // Shared state for selecting an escrow from the list
@@ -28,9 +29,14 @@ function AppContent() {
         if (view === 'dashboard') setView('escrows');
     }, [view]);
 
+    const handleNav = (target: View) => {
+        setView(target);
+        setIsMobileMenuOpen(false);
+    };
+
     const navItem = (icon: string, label: string, target: View) => (
         <button
-            onClick={() => setView(target)}
+            onClick={() => handleNav(target)}
             className={`w-full text-left py-3 px-6 flex items-center gap-3 transition-all duration-200 ease-in-out ${
                 view === target
                     ? 'bg-surface-container-high text-primary rounded-r-lg border-l-4 border-primary'
@@ -46,10 +52,16 @@ function AppContent() {
         <>
             {/* Top Nav Bar */}
             <header className="fixed top-0 w-full z-50 bg-background shadow-[0_20px_40px_rgba(6,14,32,0.4)]">
-                <div className="flex justify-between items-center h-20 px-8 w-full font-headline antialiased">
-                    <div className="flex items-center gap-12">
-                        <button onClick={() => setView('dashboard')} className="text-2xl font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity">Escrow Bond</button>
-                        <nav className="hidden md:flex items-center gap-8">
+                <div className="flex justify-between items-center h-20 px-4 md:px-8 w-full font-headline antialiased">
+                    <div className="flex items-center gap-2 md:gap-12">
+                        <button 
+                            className="lg:hidden p-2 text-on-surface-variant hover:text-white flex items-center justify-center rounded-lg active:bg-surface-container"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        >
+                            <span className="material-symbols-outlined">{isMobileMenuOpen ? 'close' : 'menu'}</span>
+                        </button>
+                        <button onClick={() => handleNav('dashboard')} className="text-xl md:text-2xl font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity">Escrow Bond</button>
+                        <nav className="hidden lg:flex items-center gap-8">
                             <button onClick={() => setView('dashboard')} className={`transition-colors text-sm font-bold ${view === 'dashboard' ? 'text-on-surface border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-on-surface'}`}>Dashboard</button>
                             <button onClick={() => setView('escrows')} className={`transition-colors text-sm font-bold ${view === 'escrows' ? 'text-on-surface border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-on-surface'}`}>My Escrows</button>
                         </nav>
@@ -68,15 +80,29 @@ function AppContent() {
                 </div>
             </header>
 
+            {/* Mobile Menu Overlay */}
+            {isMobileMenuOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/60 z-40 lg:hidden" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                />
+            )}
+
             {/* Sidebar */}
-            <aside className="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-background border-r border-outline-variant/15 hidden lg:block">
-                <div className="flex flex-col py-6 h-full font-body text-sm tracking-wide">
+            <aside className={`fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-background border-r border-outline-variant/15 z-50 transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+                <div className="flex flex-col py-6 h-full font-body text-sm tracking-wide bg-background">
                     <div className="px-6 mb-8 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden">
-                            <span className="material-symbols-outlined text-primary">account_circle</span>
+                            {wallet.connected ? (
+                                <img src={`https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${wallet.publicKey?.toBase58()}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover" />
+                            ) : (
+                                <span className="material-symbols-outlined text-primary">account_circle</span>
+                            )}
                         </div>
-                        <div>
-                            <p className="text-primary font-bold">Escrow Bond</p>
+                        <div className="overflow-hidden">
+                            <p className="text-primary font-bold truncate">
+                                {wallet.connected ? `${wallet.publicKey?.toBase58().substring(0, 4)}...${wallet.publicKey?.toBase58().slice(-4)}` : 'Escrow Bond'}
+                            </p>
                             <p className="text-xs text-on-surface-variant">Solana Devnet</p>
                         </div>
                     </div>
